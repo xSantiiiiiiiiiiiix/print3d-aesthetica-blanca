@@ -8,15 +8,47 @@ import { Menu, X } from "lucide-react";
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  const navLinks = [
+    { href: "#home", label: "Inicio", id: "home" },
+    { href: "#products", label: "Productos", id: "products" },
+    { href: "#gallery", label: "Galería", id: "gallery" },
+    { href: "#budget", label: "Presupuestos", id: "budget" },
+    { href: "#custom-order", label: "Pedidos", id: "custom-order" },
+    { href: "#about", label: "Nosotros", id: "about" },
+    { href: "#contact", label: "Contacto", id: "contact" },
+  ];
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       setIsScrolled(scrollTop > 20);
+      
+      // Find current active section based on scroll position
+      const sections = navLinks.map(link => document.getElementById(link.id));
+      const currentSection = sections.reduce((acc, section) => {
+        if (!section) return acc;
+        
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.offsetHeight;
+        
+        if (
+          scrollTop >= sectionTop &&
+          scrollTop < sectionTop + sectionHeight
+        ) {
+          return section.id;
+        }
+        return acc;
+      }, "home");
+      
+      if (currentSection) {
+        setActiveSection(currentSection);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -25,13 +57,23 @@ export function Navbar() {
     };
   }, []);
 
-  const navLinks = [
-    { href: "#home", label: "Inicio" },
-    { href: "#products", label: "Productos" },
-    { href: "#custom-order", label: "Pedidos" },
-    { href: "#about", label: "Nosotros" },
-    { href: "#contact", label: "Contacto" },
-  ];
+  // Add smooth scroll effect when clicking on nav links
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace("#", "");
+    const element = document.getElementById(targetId);
+    if (element) {
+      window.scrollTo({
+        top: element.offsetTop - 80,
+        behavior: "smooth"
+      });
+      
+      // If mobile menu is open, close it
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    }
+  };
 
   return (
     <nav
@@ -45,7 +87,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 font-bold text-xl text-primary">
-            <a href="#home">Aesthetica 3D</a>
+            <a href="#home" onClick={(e) => handleNavClick(e, "#home")}>Aesthetica 3D</a>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-6">
@@ -53,7 +95,15 @@ export function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-foreground/80 hover:text-foreground transition-colors"
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={cn(
+                    "transition-colors relative", 
+                    activeSection === link.id
+                      ? "text-primary font-medium" 
+                      : "text-foreground/80 hover:text-foreground",
+                    // Active indicator line for current section
+                    activeSection === link.id && "after:content-[''] after:absolute after:left-0 after:bottom-[-8px] after:h-0.5 after:w-full after:bg-primary after:scale-x-100 after:transition-transform"
+                  )}
                 >
                   {link.label}
                 </a>
@@ -87,8 +137,13 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="block px-3 py-2 text-base font-medium text-foreground hover:bg-accent/50 rounded-md"
-                onClick={toggleMenu}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className={cn(
+                  "block px-3 py-2 text-base font-medium rounded-md",
+                  activeSection === link.id
+                    ? "bg-primary/10 text-primary" 
+                    : "text-foreground hover:bg-accent/50"
+                )}
               >
                 {link.label}
               </a>

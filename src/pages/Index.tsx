@@ -38,31 +38,45 @@ const Index = () => {
       <Navbar />
       
       <main className="overflow-hidden">
-        <HeroSection />
+        <section id="home">
+          <HeroSection />
+        </section>
         
-        <ScrollReveal>
-          <ProductsSection />
-        </ScrollReveal>
+        <section id="products">
+          <ScrollReveal duration={1500} distance="40px">
+            <ProductsSection />
+          </ScrollReveal>
+        </section>
         
-        <ScrollReveal delay={200}>
-          <GallerySection />
-        </ScrollReveal>
+        <section id="gallery">
+          <ScrollReveal duration={1500} delay={200} distance="40px">
+            <GallerySection />
+          </ScrollReveal>
+        </section>
         
-        <ScrollReveal delay={100}>
-          <BudgetSection />
-        </ScrollReveal>
+        <section id="budget">
+          <ScrollReveal duration={1500} delay={100} distance="40px">
+            <BudgetSection />
+          </ScrollReveal>
+        </section>
         
-        <ScrollReveal delay={150}>
-          <CustomOrderForm />
-        </ScrollReveal>
+        <section id="custom-order">
+          <ScrollReveal duration={1500} delay={150} distance="40px">
+            <CustomOrderForm />
+          </ScrollReveal>
+        </section>
         
-        <ScrollReveal delay={200} origin="left">
-          <AboutSection />
-        </ScrollReveal>
+        <section id="about">
+          <ScrollReveal duration={1500} delay={200} origin="left" distance="40px">
+            <AboutSection />
+          </ScrollReveal>
+        </section>
         
-        <ScrollReveal delay={250} origin="right">
-          <ContactSection />
-        </ScrollReveal>
+        <section id="contact">
+          <ScrollReveal duration={1500} delay={250} origin="right" distance="40px">
+            <ContactSection />
+          </ScrollReveal>
+        </section>
       </main>
       
       <Footer />
