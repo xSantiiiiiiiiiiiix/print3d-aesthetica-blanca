@@ -1,13 +1,41 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useState, useEffect } from "react";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Preloader } from "@/components/preloader";
+import { Navbar } from "@/components/navbar";
+import { HeroSection } from "@/components/hero-section";
+import { ProductsSection } from "@/components/products-section";
+import { CustomOrderForm } from "@/components/custom-order-form";
+import { AboutSection } from "@/components/about-section";
+import { ContactSection } from "@/components/contact-section";
+import { Footer } from "@/components/footer";
 
 const Index = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <Preloader />;
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <ThemeProvider defaultTheme="light">
+      <Preloader />
+      <Navbar />
+      
+      <main className="overflow-hidden">
+        <HeroSection />
+        <ProductsSection />
+        <CustomOrderForm />
+        <AboutSection />
+        <ContactSection />
+      </main>
+      
+      <Footer />
+    </ThemeProvider>
   );
 };
 
