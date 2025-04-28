@@ -15,7 +15,7 @@ export function ScrollReveal({
   children,
   delay = 0,
   distance = "30px",
-  duration = 1200,  // Increased duration for slower animation
+  duration = 800,  // Decreased duration for faster animation
   origin = "bottom",
   easing = "cubic-bezier(0.5, 0, 0, 1)",
   className = "",
@@ -62,7 +62,7 @@ export function ScrollReveal({
         });
       },
       {
-        threshold: 0.2, // Increased threshold to trigger a bit later
+        threshold: 0.15, // Decreased threshold to trigger animation earlier
         rootMargin: "0px",
       }
     );

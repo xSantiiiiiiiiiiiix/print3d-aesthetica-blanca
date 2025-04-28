@@ -9,17 +9,17 @@ export function HeroSection() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="w-full md:w-1/2 space-y-6 opacity-0 animate-fade-in" style={{ animationDelay: "0.2s" }}>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Creaciones 3D <span className="text-primary bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">personalizadas</span> para tu imaginación
+              <span className="text-primary bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Vos lo soñas</span>, nosotros lo imprimimos✨
             </h1>
             <p className="text-lg text-muted-foreground">
               Transformamos ideas en objetos físicos con nuestra tecnología de impresión 3D de última generación. Diseños personalizados, detalle excepcional.
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button size="lg" className="group hover:scale-105 transition-transform duration-300">
+              <Button size="lg" className="group hover:scale-110 transition-transform duration-300 hover:shadow-lg">
                 Explorar productos
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform" />
               </Button>
-              <Button size="lg" variant="outline" asChild className="hover:scale-105 transition-transform duration-300">
+              <Button size="lg" variant="outline" asChild className="hover:scale-110 transition-transform duration-300 hover:shadow-lg hover:bg-accent/80">
                 <a href="#custom-order">Pedido personalizado</a>
               </Button>
             </div>

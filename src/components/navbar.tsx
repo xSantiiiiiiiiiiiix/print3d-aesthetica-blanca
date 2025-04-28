@@ -18,7 +18,6 @@ export function Navbar() {
     { href: "#home", label: "Inicio", id: "home" },
     { href: "#products", label: "Productos", id: "products" },
     { href: "#gallery", label: "Galería", id: "gallery" },
-    { href: "#budget", label: "Presupuestos", id: "budget" },
     { href: "#custom-order", label: "Pedidos", id: "custom-order" },
     { href: "#about", label: "Nosotros", id: "about" },
     { href: "#contact", label: "Contacto", id: "contact" },
@@ -87,7 +86,14 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 font-bold text-xl text-primary">
-            <a href="#home" onClick={(e) => handleNavClick(e, "#home")}>Aesthetica 3D</a>
+            <a href="#home" onClick={(e) => handleNavClick(e, "#home")} className="flex items-center gap-2">
+              <img 
+                src="/lovable-uploads/afffad06-76b3-4b69-9af5-f4a90b6b2290.png" 
+                alt="AMedida3D Logo" 
+                className="h-10 w-10"
+              />
+              <span>AMedida3D</span>
+            </a>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-6">
@@ -97,7 +103,7 @@ export function Navbar() {
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
                   className={cn(
-                    "transition-colors relative", 
+                    "transition-colors relative hover:text-primary", 
                     activeSection === link.id
                       ? "text-primary font-medium" 
                       : "text-foreground/80 hover:text-foreground",
@@ -112,7 +118,7 @@ export function Navbar() {
           </div>
           <div className="hidden md:flex items-center gap-4">
             <ThemeToggle />
-            <Button>Contacto</Button>
+            <Button className="hover:scale-105 transition-all duration-300 hover:bg-primary/90 hover:shadow-md">Contacto</Button>
           </div>
           <div className="flex md:hidden items-center gap-2">
             <ThemeToggle />
@@ -139,7 +145,7 @@ export function Navbar() {
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={cn(
-                  "block px-3 py-2 text-base font-medium rounded-md",
+                  "block px-3 py-2 text-base font-medium rounded-md hover:bg-primary/10 transition-all duration-200",
                   activeSection === link.id
                     ? "bg-primary/10 text-primary" 
                     : "text-foreground hover:bg-accent/50"
@@ -149,7 +155,7 @@ export function Navbar() {
               </a>
             ))}
             <div className="px-3 py-2">
-              <Button className="w-full">Contacto</Button>
+              <Button className="w-full hover:scale-105 transition-all duration-300 hover:shadow-md">Contacto</Button>
             </div>
           </div>
         </div>

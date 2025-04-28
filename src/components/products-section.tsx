@@ -10,8 +10,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ShoppingCart } from "lucide-react";
+import { Instagram, MessageCircle } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 
 interface Product {
   id: number;
@@ -72,12 +73,28 @@ export function ProductsSection() {
     ? products 
     : products.filter(product => product.category === category);
     
-  const handleAddToCart = (product: Product) => {
-    toast({
-      title: "Añadido al carrito",
-      description: `${product.name} se ha añadido a tu carrito.`,
-      duration: 3000,
-    });
+  const handleContactClick = (platform: 'instagram' | 'whatsapp', product: Product) => {
+    let url = '';
+    
+    if (platform === 'instagram') {
+      url = 'https://instagram.com/amedida3d';
+      toast({
+        title: "Redirigiendo a Instagram",
+        description: `Consultá por ${product.name} en nuestro Instagram.`,
+        duration: 3000,
+      });
+    } else {
+      // Formato para mensaje de WhatsApp
+      const message = encodeURIComponent(`Hola! Me interesa el producto: ${product.name}`);
+      url = `https://wa.me/5491112345678?text=${message}`;
+      toast({
+        title: "Redirigiendo a WhatsApp",
+        description: `Consultá por ${product.name} por WhatsApp.`,
+        duration: 3000,
+      });
+    }
+    
+    window.open(url, '_blank');
   };
   
   return (
@@ -96,7 +113,7 @@ export function ProductsSection() {
               key={cat.id} 
               variant={category === cat.id ? "default" : "outline"} 
               onClick={() => setCategory(cat.id)}
-              className="rounded-full"
+              className="rounded-full hover:scale-110 transition-all duration-300 hover:shadow-md"
             >
               {cat.name}
             </Button>
@@ -107,14 +124,14 @@ export function ProductsSection() {
           {filteredProducts.map((product, index) => (
             <Card 
               key={product.id} 
-              className="overflow-hidden hover-float opacity-0 animate-fade-in"
+              className="overflow-hidden hover-float opacity-0 animate-fade-in hover:shadow-lg transition-all"
               style={{ animationDelay: `${0.4 + index * 0.1}s` }}
             >
               <div className="aspect-square overflow-hidden">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                 />
               </div>
               <CardHeader className="pb-2">
@@ -124,13 +141,29 @@ export function ProductsSection() {
               <CardContent className="pb-4">
                 <p className="text-xl font-semibold text-primary">${product.price.toFixed(2)}</p>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="flex flex-col gap-2">
+                <HoverCard>
+                  <HoverCardTrigger asChild>
+                    <Button 
+                      className="w-full hover:scale-105 transition-all duration-300 hover:shadow-md flex items-center gap-2" 
+                      onClick={() => handleContactClick('whatsapp', product)}
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      Consultar por WhatsApp
+                    </Button>
+                  </HoverCardTrigger>
+                  <HoverCardContent>
+                    Envía un mensaje directo por WhatsApp para consultar por este producto
+                  </HoverCardContent>
+                </HoverCard>
+                
                 <Button 
-                  className="w-full" 
-                  onClick={() => handleAddToCart(product)}
+                  variant="outline" 
+                  className="w-full hover:scale-105 transition-all duration-300 hover:bg-accent/80 hover:shadow-md flex items-center gap-2"
+                  onClick={() => handleContactClick('instagram', product)}
                 >
-                  <ShoppingCart className="mr-2 h-4 w-4" />
-                  Añadir al carrito
+                  <Instagram className="h-4 w-4" />
+                  Ver en Instagram
                 </Button>
               </CardFooter>
             </Card>
